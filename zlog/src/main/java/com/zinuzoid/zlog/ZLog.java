@@ -10,8 +10,26 @@ import android.util.Log;
  */
 public class ZLog {
 
+	private static LogInterface mLogInterface;
+
+	public static void setLogInterface(LogInterface logInterface) {
+		mLogInterface = logInterface;
+	}
+
+	public static void d(String tag, String message) {
+		if(mLogInterface != null) {
+			Log.d(tag, message);
+		}
+	}
+
 	public static void d(String message) {
-		Log.d("ZLog", message);
+		d("Zlog", message);
+	}
+
+	public interface LogInterface {
+
+		void d(String tag, String message);
+
 	}
 
 }
