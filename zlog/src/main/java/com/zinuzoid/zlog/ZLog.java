@@ -23,7 +23,11 @@ public class ZLog {
 	}
 
 	public static void d(String message) {
-		d("Zlog", message);
+		d("ZLog", message);
+	}
+
+	public static void d(Object obj, String message) {
+		d(obj.getClass().getSimpleName(), message);
 	}
 
 	public interface LogInterface {
