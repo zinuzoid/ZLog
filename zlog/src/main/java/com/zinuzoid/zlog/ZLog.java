@@ -3,9 +3,6 @@ package com.zinuzoid.zlog;
 import android.util.Log;
 
 /**
- * ZLog
- * on 12/30/2015 AD
- *
  * @author Jetsada Machom <jim@imjim.im>
  */
 public class ZLog {
@@ -18,7 +15,9 @@ public class ZLog {
 
 	public static void d(String tag, String message) {
 		if(mLogInterface != null) {
-			Log.d(tag, message);
+			mLogInterface.d(tag, message);
+		} else {
+			Log.d("ZLog", "LogInterface isn't initialize!");
 		}
 	}
 
