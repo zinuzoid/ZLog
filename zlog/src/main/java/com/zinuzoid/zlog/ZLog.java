@@ -62,6 +62,13 @@ public class ZLog {
 		d(getSimpleClassName(obj.getClass().getName()), message);
 	}
 
+	public static void dumpStack() {
+		if(!ENABLE) {
+			return;
+		}
+		Thread.dumpStack();
+	}
+
 	private static String getSimpleClassName(String className) {
 		int dot = className.lastIndexOf('.');
 		if(dot != -1) {
