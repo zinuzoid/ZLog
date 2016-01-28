@@ -44,10 +44,7 @@ public class ZLog {
 		StackTraceElement ste = stackTrace[2];
 		String methodName = ste.getMethodName();
 		String className = ste.getClassName();
-		int dot = className.lastIndexOf('.');
-		if(dot != -1) {
-			className = className.substring(dot + 1);
-		}
+		className = getSimpleClassName(className);
 
 		d(className + "|" + methodName, message);
 	}
@@ -62,7 +59,15 @@ public class ZLog {
 		if(!ENABLE) {
 			return;
 		}
-		d(obj.getClass().getSimpleName(), message);
+		d(getSimpleClassName(obj.getClass().getName()), message);
+	}
+
+	private static String getSimpleClassName(String className) {
+		int dot = className.lastIndexOf('.');
+		if(dot != -1) {
+			return className.substring(dot + 1);
+		}
+		return className;
 	}
 
 	public interface LogInterface {
