@@ -1,0 +1,1 @@
+Run ./gradlew bintrayUpload to publish
