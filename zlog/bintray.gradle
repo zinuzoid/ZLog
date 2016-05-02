@@ -2,7 +2,7 @@ apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
 group = 'com.zinuzoid.zlog'
-version = '0.1.5'
+version = '0.1.6'
 
 task generateSourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs

@@ -41,7 +41,7 @@ public class ZLog {
 		}
 
 		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		StackTraceElement ste = stackTrace[2];
+		StackTraceElement ste = stackTrace[3];
 		String methodName = ste.getMethodName();
 		String className = ste.getClassName();
 		className = getSimpleClassName(className);
