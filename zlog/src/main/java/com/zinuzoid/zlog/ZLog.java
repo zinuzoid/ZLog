@@ -50,6 +50,24 @@ public class ZLog {
 	}
 
 	/**
+	 * Log with auto discovery class type and method name as TAG
+	 * This method might bring up the performance penalty. Suppose to be use as ad-hoc debug only.
+	 */
+	public static void d() {
+		if(!ENABLE) {
+			return;
+		}
+
+		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+		StackTraceElement ste = stackTrace[3];
+		String methodName = ste.getMethodName();
+		String className = ste.getClassName();
+		className = getSimpleClassName(className);
+
+		d(className + "|" + methodName, "");
+	}
+
+	/**
 	 * Log with auto discovery object's class type as TAG
 	 *
 	 * @param obj     object
