@@ -64,7 +64,7 @@ public class ZLog {
 		String className = ste.getClassName();
 		className = getSimpleClassName(className);
 
-		d(className + "|" + methodName, "");
+		d(className + "|" + methodName, "••••••••••••••••••••••••••••••••");
 	}
 
 	/**
