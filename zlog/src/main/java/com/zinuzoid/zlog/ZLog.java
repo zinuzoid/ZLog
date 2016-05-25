@@ -93,7 +93,7 @@ public class ZLog {
 	private static StackTraceResult getCallerClassMethod() {
 		StackTraceResult stackTraceResult = new StackTraceResult();
 		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		StackTraceElement ste = stackTrace[4];
+		StackTraceElement ste = stackTrace[5];
 		stackTraceResult.methodName = ste.getMethodName();
 		stackTraceResult.className = getSimpleClassName(ste.getClassName());
 		return stackTraceResult;
