@@ -2,6 +2,9 @@ package com.zinuzoid.zlog;
 
 import android.util.Log;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 /**
  * @author Jetsada Machom <jim@imjim.im>
  */
@@ -39,14 +42,24 @@ public class ZLog {
 		if(!ENABLE) {
 			return;
 		}
+		StackTraceResult stackTraceResult = getCallerClassMethod();
 
-		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		StackTraceElement ste = stackTrace[3];
-		String methodName = ste.getMethodName();
-		String className = ste.getClassName();
-		className = getSimpleClassName(className);
+		d(stackTraceResult.className + "|" + stackTraceResult.methodName, message);
+	}
 
-		d(className + "|" + methodName, message);
+	/**
+	 * Log with auto discovery class type and method name as TAG
+	 * This method might bring up the performance penalty. Suppose to be use as ad-hoc debug only.
+	 *
+	 * @param e exception
+	 */
+	public static void d(Exception e) {
+		if(!ENABLE) {
+			return;
+		}
+		StackTraceResult stackTraceResult = getCallerClassMethod();
+
+		d(stackTraceResult.className + "|" + stackTraceResult.methodName, getExceptionStackTrace(e));
 	}
 
 	/**
@@ -54,17 +67,7 @@ public class ZLog {
 	 * This method might bring up the performance penalty. Suppose to be use as ad-hoc debug only.
 	 */
 	public static void d() {
-		if(!ENABLE) {
-			return;
-		}
-
-		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		StackTraceElement ste = stackTrace[3];
-		String methodName = ste.getMethodName();
-		String className = ste.getClassName();
-		className = getSimpleClassName(className);
-
-		d(className + "|" + methodName, "••••••••••••••••••••••••••••••••");
+		d("••••••••••••••••••••••••••••••••");
 	}
 
 	/**
@@ -87,12 +90,32 @@ public class ZLog {
 		Thread.dumpStack();
 	}
 
+	private static StackTraceResult getCallerClassMethod() {
+		StackTraceResult stackTraceResult = new StackTraceResult();
+		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+		StackTraceElement ste = stackTrace[4];
+		stackTraceResult.methodName = ste.getMethodName();
+		stackTraceResult.className = getSimpleClassName(ste.getClassName());
+		return stackTraceResult;
+	}
+
+	private static String getExceptionStackTrace(Exception e) {
+		StringWriter writer = new StringWriter();
+		e.printStackTrace(new PrintWriter(writer));
+		return writer.toString();
+	}
+
 	private static String getSimpleClassName(String className) {
 		int dot = className.lastIndexOf('.');
 		if(dot != -1) {
 			return className.substring(dot + 1);
 		}
 		return className;
+	}
+
+	private static class StackTraceResult {
+		public String methodName;
+		public String className;
 	}
 
 	public interface LogInterface {
