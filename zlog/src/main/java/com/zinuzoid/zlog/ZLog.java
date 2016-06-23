@@ -26,7 +26,7 @@ public class ZLog {
 			return;
 		}
 		if(LOG_INTERFACE != null) {
-			LOG_INTERFACE.d(tag, message);
+			LOG_INTERFACE.d(nvl(tag), nvl(message));
 		} else {
 			Log.d("ZLog", "LogInterface isn't initialize!");
 		}
@@ -111,6 +111,14 @@ public class ZLog {
 			return className.substring(dot + 1);
 		}
 		return className;
+	}
+
+	private static String nvl(String inp) {
+		return nvl(inp, "#null#");
+	}
+
+	private static String nvl(String inp, String def) {
+		return inp != null ? inp : def;
 	}
 
 	private static class StackTraceResult {
